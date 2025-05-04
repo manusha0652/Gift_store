@@ -7,6 +7,7 @@
    th{
     background-color: skyblue !important;
     border-right:  2px solid yellowgreen !important;
+    border: 2px solid yellowgreen !important;
      color: black;
     
    } 
@@ -20,6 +21,13 @@
         margin-top: 20px !important;
        
     }
+
+    .section{
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 20px !important;
+    }
   </style>
   </head>
   <body>
@@ -29,8 +37,29 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
-            <div class="header"> <h1>View Products</h1></div>
+
+          <div class="section">
+         
+            <div class="header"> <h1>View Products</h1>
+        </div>
+            <div class="search">
+
+          <form action="{{ url('search_product') }}" method="GET" class="form-inline my-2 my-lg-0">
+            @csrf
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search by title or category" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="button" onclick="clearSearch()" style="margin-left: 5px;">Clear</button>
+
+            </form>
+
+            </div>
+        </div>
            
+              @if($data->isEmpty())
+                <div class="alert alert-warning" role="alert">
+                    No products found for this search: "{{ request('search') }}".
+                </div>
+                @else
             <table class="table table-bordered">
                 <thead class="table">
                     <tr >
@@ -71,6 +100,7 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
             <div class="pagination"> {{ $data->onEachSide(1)->links() }}
 
             </div>
@@ -81,6 +111,11 @@
     </div>
    
 <script>
+    function clearSearch() {
+        // Clear the search input and reload the page
+        document.querySelector('input[name="search"]').value = '';
+        window.location.href = "{{ url('view_product') }}"; // Redirect to the view product page
+    }
     function confirmation(ev) {
         ev.preventDefault(); // Prevent the default action (navigation)
         var link = ev.currentTarget.getAttribute('href'); // Get the href attribute of the clicked link

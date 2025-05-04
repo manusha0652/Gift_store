@@ -33,3 +33,5 @@ route::get('view_product',[AdminController::class,'view_product'])->middleware([
 route::get('delete_product/{id}',[AdminController::class,'delete_product'])->middleware(['auth','admin']);
 route::get('update_product/{id}',[AdminController::class,'update_product'])->middleware(['auth','admin']);
 route::put('update_product/{id}',[AdminController::class,'update_product_data'])->middleware(['auth','admin']);
+route::get('search_product/',[AdminController::class,'search_product'])->middleware(['auth','admin']);
+
