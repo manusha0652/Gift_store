@@ -14,6 +14,12 @@
      color: white !important;
      border: 2px solid yellowgreen !important;
     }
+    .pagination{
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 20px !important;
+       
+    }
   </style>
   </head>
   <body>
@@ -35,6 +41,8 @@
                         <th>Price</th>
                         <th>Category</th>
                         <th>Quantity</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                        
                        
                     </tr>
@@ -44,17 +52,29 @@
                     <tr>
                        
                         <td>{{ $product->title }}</td>
-                        <td>{{ $product->description }}</td>
+                        <td>{!! Str::limit($product->description,50)  !!}</td>
                         <td><img height="100px" width="120px" src="{{ asset('product/' . $product->image) }}" alt="{{ $product->title }}" width="50"></td>
-                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->price }} LKR</td>
                         <td>{{ $product->category }}</td>
                         <td>{{ $product->quantity }}</td>
+                        <td>
+                        <a href="{{ url('update_product', $product->id) }}" class="btn btn-success">Update</a>
+                            
+                        </td>
+                        <td>
+                        <a href="{{ url('delete_product', $product->id) }}" class="btn btn-danger">Delete</a>
+                        </td>
+
                        
     
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="pagination"> {{ $data->onEachSide(1)->links() }}
+
+            </div>
+           
 
           </div>    
       </div>
