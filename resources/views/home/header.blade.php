@@ -34,18 +34,28 @@
             </li>
           </ul>
           <div class="user_option">
-            <a href="{{url('/login')  }}">
-              <i class="fa fa-user" aria-hidden="true"></i>
+            @guest
+            <a href="{{url('/login')}}">
+              <i class="fa fa-sign-in" aria-hidden="true"></i>
               <span>
-                Login
+              Login
               </span>
             </a>
-            <a href="{{url('/register')  }}">
-              <i class="fa fa-vcard" aria-hidden="true"></i>
+            <a href="{{url('/register')}}">
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
               <span>
-                Register
+              Register
               </span>
             </a>
+            @else
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+              @csrf
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span>Logout</span>
+                </a>
+            </form> 
+            @endguest
             <a href="">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>
