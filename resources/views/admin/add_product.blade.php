@@ -19,7 +19,8 @@
           <div class="container-fluid">
            <div class="row">
               <div class="col-lg-12">
-                <h1 class="h5" style="color: white; margin-bottom: 15px;">Add Product</h1>
+                <div class="header"> <h1 >Add Product</h1></div>
+               
               </div>
             </div>
             <div class="row">
