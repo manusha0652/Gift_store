@@ -19,7 +19,7 @@
           <div class="container-fluid">
            <div class="row">
               <div class="col-lg-12">
-                <div class="header"> <h1 >Add Product</h1></div>
+                <div class="header"> <h1 >Update Products </h1></div>
                
               </div>
             </div>
@@ -51,9 +51,11 @@
                     <label for="product_quantity" style="color: white;">Product Quantity</label>
                     <input id="product_quantity" type="number" name="quantity" class="form-control" value="{{ $data->quantity }}" required>
                     
-                    <label for="product_image" style="color: white;">Product Image</label>
+                    <label for="product_image" style="color: white;">Add new Product Image</label>
                     <input id="product_image" type="file" name="image" class="form-control">
-                    <img src="{{ asset('product/' . $data->image) }}" alt="Product Image" style="max-width: 100px; margin-top: 10px;">
+                    <div class="img"><label for="product_image" style="color: white;">current  Image :</label>
+                    <img src="{{ asset('product/' . $data->image) }}" alt="Product Image" style="max-width: 100px; margin-top: 10px;"></div>
+                    
                     
                     <button type="submit" class="btn btn-success mt-3">Update Product</button>
                   </form>
