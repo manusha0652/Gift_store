@@ -20,7 +20,7 @@
                     </div>
                   </div>
                   <div class="col-md-5 ">
-                    <div class="img-box">
+                    <div class="img-boxx">
                       <img style="width:600px" src="images/image3.jpeg" alt="" />
                     </div>
                   </div>

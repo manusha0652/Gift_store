@@ -9,9 +9,13 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/dashboard', function () {
-    return view('home.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
+Route::get('/product/addToCart/{id}', [HomeController::class, 'addToCart'])->name('product.addToCart');
+
+
+
 
 
 Route::middleware('auth')->group(function () {
