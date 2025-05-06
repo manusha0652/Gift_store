@@ -12,7 +12,7 @@ Route::get('/', [HomeController::class, 'home']);
 
 Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
-Route::get('/product/addToCart/{id}', [HomeController::class, 'addToCart'])->name('product.addToCart');
+Route::get('/product/addToCart/{id}', [HomeController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
 
 
 
