@@ -34,6 +34,7 @@
         }
     </style>
 </head>
+@header
 <body>
     <div class="container">
         <div class="product-container">

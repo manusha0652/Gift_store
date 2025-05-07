@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,14 @@ Route::get('/', [HomeController::class, 'home']);
 
 Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
-Route::get('/product/addToCart/{id}', [HomeController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
+Route::get('/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
+Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth','verified'])->name('home.cart');
+Route::get('/delete_item/{id}', [CartController::class, 'delete_item'])->middleware(['auth','verified'])->name('home.delete_item');
+Route::post('/cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+
+
+
+
 
 
 
@@ -22,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+   
 });
 
 require __DIR__.'/auth.php';

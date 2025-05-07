@@ -18,29 +18,24 @@ return view('admin.index');
     public function home(){
         // Fetch products from the database
          $products = Product::all();
-        // Pass the products to the view
+         
+        
          return view('home.index', compact('products'));
        
     }
     public function login_home(){
         $products = Product::all();
         // Pass the products to the view
-         return view('home.index', compact('products'));
+        $user = Auth::user();
+        $user_id = $user->id;
+        $count = Cart::where('user_id', $user_id)->count();
+ 
+         return view('home.index', compact('products','count'));
     }
     public function productDetails($id){
         $product = Product::find($id);
         return view('home.product_details', compact('product'));
     }
-    public function addToCart( $id){
-        $product_id = $id;
-        $user= Auth::user();
-        $user_id = $user->id;
-        $data = new Cart;
-        $data->user_id = $user_id;
-        $data->product_id = $product_id;
-        $data->save();
-        toastr()->success('🎉 Product added to your cart successfully! 🛒');
-        return redirect()->back();
-       
-}
+    
+   
 }

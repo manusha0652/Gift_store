@@ -56,8 +56,15 @@
                 </a>
             </form> 
             @endguest
-            <a href="">
+            <a href="{{ route('home.cart') }}">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <span style="color: orangered;">
+                @auth
+                  @if(!empty($count))
+                  {{$count}}
+                  @endif
+                @endauth
+              </span>
             </a>
             <form class="form-inline ">
               <button class="btn nav_search-btn" type="submit">
