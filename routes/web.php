@@ -13,10 +13,21 @@ Route::get('/', [HomeController::class, 'home']);
 
 Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
-Route::get('/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
+Route::post('/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
 Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth','verified'])->name('home.cart');
 Route::get('/delete_item/{id}', [CartController::class, 'delete_item'])->middleware(['auth','verified'])->name('home.delete_item');
 Route::post('/cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::get('/why_us', [HomeController::class, 'whyUs'])->name('home.why_us');
+Route::get('/home', [HomeController::class, 'home'])->name('home.index');
+Route::get('/testimonial', [HomeController::class, 'Testimonial'])->name('home.testimonial');
+Route::get('/contact', [HomeController::class, 'ContactUs'])->name('home.contact_us');
+Route::get('/products', [HomeController::class, 'home'])->name('home.product');
+Route::post('/product/addToCartInProductDetail/{id}', [CartController::class, 'addToCartInProductDetail'])->name('product.addToCartInProductDetail');
+
+
+
+
+
 
 
 

@@ -12,25 +12,25 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav  ">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('home.index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="shop.html">
+              <a class="nav-link" href="{{ route('home.product') }}">
                 Shop
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="why.html">
+              <a class="nav-link" href="{{ route('home.why_us') }}">
                 Why Us
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="testimonial.html">
+              <a class="nav-link" href="{{ route('home.testimonial') }}">
                 Testimonial
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
+              <a class="nav-link" href="{{ route('home.contact_us') }}">Contact Us</a>
             </li>
           </ul>
           <div class="user_option">
@@ -63,6 +63,7 @@
                   @if(!empty($count))
                   {{$count}}
                   @endif
+                  
                 @endauth
               </span>
             </a>

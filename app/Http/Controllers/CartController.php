@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -17,38 +18,40 @@ class CartController extends Controller
         $user_id = $user->id;
         $cart_items = Cart::with('product')->where('user_id', $user_id)->get();
 
-        
-        
+
+
         return view('home.cart', compact('cart_items'));
     }
-    public function addToCart( $id){
+    public function addToCart($id)
+    {
         $product_id = $id;
-        $user= Auth::user();
+        $user = Auth::user();
+        dd($user);
         $user_id = $user->id;
         $data = new Cart;
         $data->user_id = $user_id;
         $data->product_id = $product_id;
+
+
         $data->save();
         toastr()->success('🎉 Product added to your cart successfully! 🛒');
         return redirect()->back();
-       
-}
+    }
     public function delete_item($id)
-    {    $cart_item = Cart::find($id);
-          if ($cart_item) {
-       
-        $currentProductQuantity = Product::find($cart_item->product_id);
-       
+    {
+        $cart_item = Cart::find($id);
+        if ($cart_item) {
+
+            $currentProductQuantity = Product::find($cart_item->product_id);
+
             if ($currentProductQuantity) {
-                $currentProductQuantity->quantity = $currentProductQuantity->quantity + 1;
+                $currentProductQuantity->quantity = $currentProductQuantity->quantity + $cart_item->quantity; // Increase the product quantity
                 $currentProductQuantity->save();
             }
 
-        
+
             $cart_item->delete();
             toastr()->success('Product removed from cart successfully!');
-            
-
         } else {
             toastr()->error('Product not found in cart.');
         }
@@ -56,14 +59,14 @@ class CartController extends Controller
     }
     public function updateQuantity(Request $request)
     {
-        $user_id = Auth::id(); 
+        $user_id = Auth::id();
         $id = $request->input('id');  // now using cart id
         $quantity = $request->input('quantity');
-    
+
         $cartItem = Cart::where('user_id', $user_id)
-                        ->where('id', $id)  // safe lookup by cart row
-                        ->first();
-    
+            ->where('id', $id)  // safe lookup by cart row
+            ->first();
+
         if ($cartItem) {
             $previousQuantity = $cartItem->quantity; // Store the previous quantity
             $cartItem->quantity = $quantity;
@@ -85,8 +88,31 @@ class CartController extends Controller
             return response()->json(['success' => false, 'message' => 'Item not found']);
         }
     }
-        } 
 
-    
-    
+    public function addToCartInProductDetail(Request $request, $id)
+    {
+        $product_id = $id;
+        $user = Auth::user();
+        $user_id = $user->id;
+        $quantity = $request->input('quantity', 1);
 
+        $data = new Cart;
+        $data->user_id = $user_id;
+        $data->product_id = $product_id;
+        $data->quantity = $quantity;
+        $data->save();
+        $product = Product::find($product_id);
+        if ($product) {
+            $product->quantity -= $quantity; // Decrease the product quantity
+            $product->save();
+        }
+        // Optionally, you can also check if the product quantity is sufficient before adding to cart
+        // if ($product->quantity < $quantity) {
+        //     return response()->json(['error' => 'Insufficient product quantity'], 400);
+        // }
+        // Save the cart item
+
+        toastr()->success('🎉 Product added to your cart successfully! 🛒');
+        return redirect()->back();
+    }
+}

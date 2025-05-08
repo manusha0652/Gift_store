@@ -16,12 +16,18 @@ return view('admin.index');
 
 
     public function home(){
-        // Fetch products from the database
-         $products = Product::all();
-         
-        
-         return view('home.index', compact('products'));
-       
+        if (Auth::check()) { 
+            // Fetch products from the database
+            $products = Product::all();
+            // Pass the products to the view
+            $user = Auth::user();
+            $user_id = $user->id;
+            $count = Cart::where('user_id', $user_id)->count();
+            
+            return view('home.index', compact('products', 'count'));
+        } else {
+            return redirect()->route('login');
+        }
     }
     public function login_home(){
         $products = Product::all();
@@ -36,6 +42,14 @@ return view('admin.index');
         $product = Product::find($id);
         return view('home.product_details', compact('product'));
     }
-    
+    public function whyUs(){
+        return view('home.why_us');
+    }
+    public function Testimonial(){
+        return view('home.testimonial');
+    }
+    public function ContactUs(){
+        return view('home.contact_us');
+    }
    
 }
