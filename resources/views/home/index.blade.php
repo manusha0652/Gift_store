@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+
 
 <head>
  @include('home.css')
@@ -177,4 +177,3 @@
 
 </body>
 
-</html>

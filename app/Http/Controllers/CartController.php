@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 use Illuminate\Http\Request;
 
@@ -25,16 +27,21 @@ class CartController extends Controller
     public function addToCart($id)
     {
         $product_id = $id;
+        $product = Product::find($product_id);
+
         $user = Auth::user();
-        dd($user);
+       
         $user_id = $user->id;
         $data = new Cart;
         $data->user_id = $user_id;
         $data->product_id = $product_id;
 
-
+      if($product->quantity > 0){
         $data->save();
         toastr()->success('🎉 Product added to your cart successfully! 🛒');
+      }
+       
+        
         return redirect()->back();
     }
     public function delete_item($id)
@@ -42,14 +49,7 @@ class CartController extends Controller
         $cart_item = Cart::find($id);
         if ($cart_item) {
 
-            $currentProductQuantity = Product::find($cart_item->product_id);
-
-            if ($currentProductQuantity) {
-                $currentProductQuantity->quantity = $currentProductQuantity->quantity + $cart_item->quantity; // Increase the product quantity
-                $currentProductQuantity->save();
-            }
-
-
+            
             $cart_item->delete();
             toastr()->success('Product removed from cart successfully!');
         } else {
@@ -72,16 +72,16 @@ class CartController extends Controller
             $cartItem->quantity = $quantity;
             $cartItem->save();
 
-            $updateProductQuantity = Product::find($cartItem->product_id);
-            if ($updateProductQuantity) {
-                // Adjust the product quantity based on the difference
-                $quantityDifference = $quantity - $previousQuantity;
-                $newQuantity = $updateProductQuantity->quantity - $quantityDifference;
+            // $updateProductQuantity = Product::find($cartItem->product_id);
+            // if ($updateProductQuantity) {
+            //     // Adjust the product quantity based on the difference
+            //     $quantityDifference = $quantity - $previousQuantity;
+            //     $newQuantity = $updateProductQuantity->quantity - $quantityDifference;
 
-                // Ensure the quantity does not go below 0
-                $updateProductQuantity->quantity = max(0, $newQuantity);
-                $updateProductQuantity->save();
-            }
+            //     // Ensure the quantity does not go below 0
+            //     $updateProductQuantity->quantity = max(0, $newQuantity);
+            //     $updateProductQuantity->save();
+            // }
 
             return response()->json(['success' => true]);
         } else {
@@ -115,4 +115,6 @@ class CartController extends Controller
         toastr()->success('🎉 Product added to your cart successfully! 🛒');
         return redirect()->back();
     }
+   
+
 }

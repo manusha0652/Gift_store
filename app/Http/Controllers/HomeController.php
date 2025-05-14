@@ -18,7 +18,7 @@ return view('admin.index');
     public function home(){
         if (Auth::check()) { 
             // Fetch products from the database
-            $products = Product::all();
+            $products = Product::where('quantity', '>', 0)->get();
             // Pass the products to the view
             $user = Auth::user();
             $user_id = $user->id;

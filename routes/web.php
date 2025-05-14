@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PayhereController;
+
 
 
 Route::get('/', [HomeController::class, 'home']);
@@ -13,7 +15,7 @@ Route::get('/', [HomeController::class, 'home']);
 
 Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
-Route::post('/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
+Route::match(['get', 'post'], '/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
 Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth','verified'])->name('home.cart');
 Route::get('/delete_item/{id}', [CartController::class, 'delete_item'])->middleware(['auth','verified'])->name('home.delete_item');
 Route::post('/cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
@@ -23,6 +25,15 @@ Route::get('/testimonial', [HomeController::class, 'Testimonial'])->name('home.t
 Route::get('/contact', [HomeController::class, 'ContactUs'])->name('home.contact_us');
 Route::get('/products', [HomeController::class, 'home'])->name('home.product');
 Route::post('/product/addToCartInProductDetail/{id}', [CartController::class, 'addToCartInProductDetail'])->name('product.addToCartInProductDetail');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/checkout', [PayhereController::class, 'checkout'])->name('payhere.checkout');
+    Route::get('/payment/return', [PayhereController::class, 'return'])->name('payhere.return');
+    Route::get('/payment/cancel', [PayhereController::class, 'cancel'])->name('payhere.cancel');
+    
+});
+Route::post('/payment/notify', [PayhereController::class, 'notify'])->name('payhere.notify');
+
 
 
 

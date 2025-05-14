@@ -10,6 +10,7 @@
       <div class="row">
         @foreach($products as $product)
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+          
           <div class="product-card">
             <!-- Badge for new products -->
             <div class="product-badge">
