@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayhereController;
+use Illuminate\Support\Facades\Auth;
 
 
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'login_home'])->name('home.index');
+Route::get('/dashboard', [HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/dashboard', [HomeController::class, 'login_home'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/product/details/{id}', [HomeController::class, 'productDetails'])->name('product.details');
 Route::match(['get', 'post'], '/product/addToCart/{id}', [CartController::class, 'addToCart'])->middleware(['auth','verified'])->name('product.addToCart');
 Route::get('/cart', [CartController::class, 'cart'])->middleware(['auth','verified'])->name('home.cart');
@@ -26,6 +27,9 @@ Route::get('/contact', [HomeController::class, 'ContactUs'])->name('home.contact
 Route::get('/products', [HomeController::class, 'home'])->name('home.product');
 Route::post('/product/addToCartInProductDetail/{id}', [CartController::class, 'addToCartInProductDetail'])->name('product.addToCartInProductDetail');
 
+Route::post('/custom-logout', [HomeController::class, 'customLogout'])->name('custom.logout');
+
+
 Route::middleware('auth')->group(function () {
     Route::post('/checkout', [PayhereController::class, 'checkout'])->name('payhere.checkout');
     Route::get('/payment/return', [PayhereController::class, 'return'])->name('payhere.return');
@@ -33,6 +37,10 @@ Route::middleware('auth')->group(function () {
     
 });
 Route::post('/payment/notify', [PayhereController::class, 'notify'])->name('payhere.notify');
+
+
+
+Route::post('/testimonials', [HomeController::class, 'store_testimonial'])->name('testimonial');
 
 
 

@@ -9,6 +9,7 @@
 
         <div class="logo">
           <a href="{{ route('home.index') }}">
+            <span class="logoname" style="color: white; font-size: 24px; font-weight: bold;">SoulGift</span>
             <img src="{{ asset('images/nuw_logo.png') }}" alt="Logo" style="height:40px; ">
           </a>
           </div>
@@ -51,13 +52,14 @@
               </span>
             </a>
             @else
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-              @csrf
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">
-                <i class="fa fa-user" aria-hidden="true"></i>
-                <span>Logout</span>
-                </a>
-            </form> 
+            <div>
+            <div class="list-inline-item logout">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <input type="submit" value="Logout" style="background: none; color: white;">
+              </form>
+            </div>
             @endguest
             <a href="{{ route('home.cart') }}">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
@@ -70,11 +72,7 @@
                 @endauth
               </span>
             </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+           </div>
           </div>
         </div>
       </nav>

@@ -16,7 +16,7 @@
                     we help you create meaningful moments for your loved ones. Each gift tells a story, each purchase creates a memory that lasts forever. Let us help
                      you find that special something that speaks when  words aren't enough.
                   </p>
-                  <a href="">
+                  <a href="{{ route('home.contact_us') }}">
                     Contact Us
                   </a>
                 </div>

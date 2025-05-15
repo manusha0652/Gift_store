@@ -1,32 +1,164 @@
-<!DOCTYPE html>
-<html>
-
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  @include('home.css')
+  <style>
+    /* Custom modal header style */
+   /* Enhanced modal styling */
+.modal-header {
+  background-color: #FF4E00;
+  color: white;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+}
 
-  <title>
-    Giftos
-  </title>
+.modal-footer {
+  background-color: #FF4E00;
+  border-top: none;
+  margin-bottom: 0px;
+}
 
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+.modal-content {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px rgba(255, 78, 0, 0.2), 0 10px 30px rgba(0, 0, 0, 0.2);
+}
 
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+.modal-body .form-control {
+  border-left: 3px solid #FF4E00;
+}
 
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+.modal-body .form-control:focus {
+  border-color: #FF4E00;
+  box-shadow: 0 0 0 0.2rem rgba(255, 78, 0, 0.25);
+}
+
+.modal-footer .btn-primary {
+  background-color: white;
+  color: #FF4E00;
+  border: none;
+  font-weight: bold;
+}
+
+.modal-footer .btn-secondary {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}
+
+.modal {
+  z-index: 1055;
+}
+
+.modal-dialog {
+  z-index: 1060;
+}
+
+
+
+    /* Fix carousel overlapping issue */
+    .carousel-item {
+      display: none;
+      transition: opacity 0.6s ease;
+      position: relative;
+    }
+
+    .carousel-item.active {
+      display: block;
+    }
+    
+    /* Testimonial section styling */
+    .client_section {
+      position: relative;
+      padding-top: 60px;
+    }
+    
+    /* Share Your Story button styling */
+    .share-story-btn {
+      position: absolute;
+      top: 20px;
+      right: 50px;
+      background-color: #FF4E00;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      /* box-shadow: 0 4px 15px rgba(255, 78, 0, 0.3); */
+      transition: all 0.3s ease;
+    }
+    
+    .share-story-btn:hover {
+      background-color: #ff6a2b;
+      transform: translateY(-3px);
+      /* box-shadow: 0 6px 20px rgba(255, 78, 0, 0.4); */
+    }
+    
+    .share-story-btn i {
+      margin-right: 8px;
+    }
+    
+    /* Testimonial box styling */
+    .box {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 20px 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .box:hover {
+      transform: translateY(-5px);
+      /* box-shadow: 0 8px 25px rgba(255, 78, 0, 0.15); */
+    }
+    
+    .client_name h5 {
+      color: #FF4E00;
+      font-weight: bold;
+    }
+    
+    .fa-quote-left {
+      color: #FF4E00;
+      font-size: 24px;
+    }
+    
+    /* Carousel controls styling */
+    .carousel_btn-box a {
+      background-color: #FF4E00;
+      width: 20px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      
+    }
+    
+    .carousel_btn-box a:hover {
+      opacity: 1;
+      
+    }
+    
+    .heading_container h2 {
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .heading_container h2:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: #FF4E00;
+    }
+  </style>
 </head>
 
 <body>
@@ -34,7 +166,6 @@
     <!-- header section strats -->
     @include('home.header')
     <!-- end header section -->
-
   </div>
   <!-- end hero area -->
 
@@ -46,65 +177,40 @@
           Testimonial
         </h2>
       </div>
+      
+      <!-- Moved button to top right with new styling -->
+      <button type="button" class="share-story-btn" data-toggle="modal" data-target="#testimonialModal">
+        <i class="fa fa-pencil"></i> Share Your Story
+      </button>
     </div>
+    
+    <div class="add_testomonial"></div>
     <div class="container px-0">
-      <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
+      @if(count($testimonials) > 0)
+      <div id="customCarousel2" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
+          @foreach($testimonials as $index => $testimonial)
+          <div class="carousel-item @if($index == 0) active @endif">
             <div class="box">
               <div class="client_info">
                 <div class="client_name">
                   <h5>
-                    Morijorch
+                    {{ $testimonial->name }}
                   </h5>
                   <h6>
-                    Default model text
+                    {{ $testimonial->title }}, {{ $testimonial->city }}
                   </h6>
                 </div>
                 <i class="fa fa-quote-left" aria-hidden="true"></i>
               </div>
               <p>
-                editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
+                {{ $testimonial->message }}
               </p>
             </div>
           </div>
-          <div class="carousel-item">
-            <div class="box">
-              <div class="client_info">
-                <div class="client_name">
-                  <h5>
-                    Rochak
-                  </h5>
-                  <h6>
-                    Default model text
-                  </h6>
-                </div>
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-              </div>
-              <p>
-                Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
-              </p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="box">
-              <div class="client_info">
-                <div class="client_name">
-                  <h5>
-                    Brad Johns
-                  </h5>
-                  <h6>
-                    Default model text
-                  </h6>
-                </div>
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-              </div>
-              <p>
-                Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy, editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
-              </p>
-            </div>
-          </div>
+          @endforeach
         </div>
+        @if(count($testimonials) > 1)
         <div class="carousel_btn-box">
           <a class="carousel-control-prev" href="#customCarousel2" role="button" data-slide="prev">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -115,106 +221,63 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
+        @endif
       </div>
+      @else
+      <p class="text-center">No testimonials available yet. Be the first to share your experience!</p>
+      @endif
     </div>
   </section>
   <!-- end client section -->
 
-  <!-- info section -->
+  @include('home.footer')
 
-  <section class="info_section  layout_padding2-top">
-    <div class="social_container">
-      <div class="social_box">
-        <a href="">
-          <i class="fa fa-facebook" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-twitter" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-youtube" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-    <div class="info_container ">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              ABOUT US
-            </h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
-            </p>
+  <!-- Testimonial Modal with improved styling -->
+  <div class="modal fade" id="testimonialModal" tabindex="-1" role="dialog" aria-labelledby="testimonialModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form action="{{ route('testimonial') }}" method="POST">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="testimonialModalLabel">Share Your Experience</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="info_form ">
-              <h5>
-                Newsletter
-              </h5>
-              <form action="#">
-                <input type="email" placeholder="Enter your email">
-                <button>
-                  Subscribe
-                </button>
-              </form>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="title">Your Title (e.g., Software Engineer)</label>
+              <input type="text" class="form-control" name="title" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Testimonial</label>
+              <textarea class="form-control" name="message" rows="4" required></textarea>
             </div>
           </div>
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              NEED HELP
-            </h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
-            </p>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              CONTACT US
-            </h6>
-            <div class="info_link-box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span> Gb road 123 london Uk </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+01 12345678901</span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span> demo@gmail.com</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-    <!-- footer section -->
-    <footer class=" footer_section">
-      <div class="container">
-        <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
-        </p>
-      </div>
-    </footer>
-    <!-- footer section -->
-
-  </section>
-
-  <!-- end info section -->
-
+  </div>
 
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <script src="js/custom.js"></script>
-
 </body>
-
-</html>

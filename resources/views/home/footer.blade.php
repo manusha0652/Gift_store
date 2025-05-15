@@ -23,7 +23,7 @@
               ABOUT US
             </h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
+              We are SoulGift, dedicated to making gifting easy and meaningful. We help you find the perfect gift for every occasion and support you throughout your shopping experience.
             </p>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -32,7 +32,7 @@
                 Newsletter
               </h5>
               <form action="#">
-                <input type="email" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email" />
                 <button>
                   Subscribe
                 </button>
@@ -44,7 +44,7 @@
               NEED HELP
             </h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
+              Need assistance? Our support team is here to help you with any questions or issues. Contact us anytime for prompt and friendly support.
             </p>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -54,15 +54,15 @@
             <div class="info_link-box">
               <a href="">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span> Gb road 123 london Uk </span>
+                <span> No.23 Hakmana Road ,Matara  </span>
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+01 12345678901</span>
+                <span>0412255414</span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span> demo@gmail.com</span>
+                <span> SoulGift@gmail.com</span>
               </a>
             </div>
           </div>
@@ -73,8 +73,8 @@
     <footer class=" footer_section">
       <div class="container">
         <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Web Tech Knowledge</a>
+          &copy; <span id="displayYear"></span> All Rights Reserved  SoulGift
+         
         </p>
       </div>
     </footer>
