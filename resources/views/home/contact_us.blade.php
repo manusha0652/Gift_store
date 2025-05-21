@@ -33,7 +33,8 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+          <form action="{{ route('home.contact_us') }}" method="POST" class="contact_form">
+            @csrf
             <div>
               <input type="text" placeholder="Name" />
             </div>
